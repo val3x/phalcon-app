@@ -1,2 +1,2 @@
 # phalcon-api-skeleton
-A simple Phalcon api skeleton for REST services and more!
+A simple and powerfull Phalcon api skeleton for REST services and more!
