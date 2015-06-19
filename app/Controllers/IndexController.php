@@ -2,19 +2,15 @@
 
 namespace App\Controllers;
 
-use App\Models\Guild;
+use App\Models\Item;
 
 class IndexController extends BaseController {
 
     public function indexAction($test = null)
     {
-        $guilds = Guild::find();
+        $items = Item::find();
 
-        // return $guilds;
-
-        echo 'D:';
-
-        return ':D';
+        return $items;
     }
 
     public function testAction()

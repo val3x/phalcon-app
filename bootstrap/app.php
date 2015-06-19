@@ -11,8 +11,9 @@ use Phalcon\Mvc\Application as PhalconApplication;
 use Phalcon\Mvc\Dispatcher;
 // use Phalcon\Mvc\Router;
 use Phalcon\Mvc\View;
-
 use Phalcon\Events\Manager;
+
+use App\Exception\ApiException;
 
 class Application extends PhalconApplication {
     public function __construct()
@@ -39,16 +40,32 @@ class Application extends PhalconApplication {
             return $view;
         });
 
-        $di->set('dispatcher', function(){
+        $di->set('dispatcher', function() use ($di) {
             $eventsManager = new Manager();
 
-            $eventsManager->attach('dispatch:afterExecuteRoute', function($event, $dispatcher) {
+            $eventsManager->attach('dispatch:afterExecuteRoute', function($event, $dispatcher) use ($di) {
                 $returned = $event->getSource()->getReturnedValue();
 
+
+                if (is_object($returned)) {
+                    if ( ! method_exists($returned, 'toArray')) {
+                        throw new ApiException('The returned value can not be parsed, try it manual.');
+                    }
+
+                    $returned = $returned->toArray();
+                }
+
                 $response = new Response();
-                $response->setContent($returned);
-                // $response->setHeader('Content-Type', 'application/json');
-                // $response->setJsonContent($returned);
+                // $response->setContent($returned);
+                $response->setHeader('Content-Type', 'application/json');
+
+                $json_options = 0;
+
+                if ($di->get('config')->debug) {
+                    $json_options = 128;
+                }
+
+                $response->setJsonContent($returned, $json_options);
 
                 $event->getSource()->setReturnedValue($response);
             });
@@ -60,13 +77,13 @@ class Application extends PhalconApplication {
             return $dispatcher;
         });
 
-        $di->set('response', function(){
-            var_dump('in response');
+        // $di->set('response', function(){
+        //     var_dump('in response');
 
-            $response = new Response();
+        //     $response = new Response();
 
-            return $response;
-        });
+        //     return $response;
+        // });
 
         ///////!!!!!!!!!!!!!!!!
         $di->set('modelsMetadata', function(){
