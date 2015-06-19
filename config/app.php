@@ -44,7 +44,7 @@ return new \Phalcon\Config([
 	     *
 	     **/
 	    'headers' => [
-	    	'Content-Type' => 'application/json'
+	    	'Content-Type' => 'application/json',
 	    ]
     ]
 ]);
