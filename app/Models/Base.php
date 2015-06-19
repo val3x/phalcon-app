@@ -6,12 +6,12 @@ use Phalcon\Mvc\Model;
 
 abstract class Base extends Model {
 
-	public function initialize()
+    public function initialize()
     {
         $this->setConnectionService('db.default');
     }
 
-	public function beforeCreate()
+    public function beforeCreate()
     {
         $this->created = date('Y-m-d H:i:s');
     }

@@ -1,7 +1,7 @@
 <?php
 
 return new \Phalcon\Config([
-	'debug' => true,
+    'debug' => true,
     // 'default' => [
     //     'adapter'     => Phalcon\Db\Adapter\Pdo\Mysql::class,
     //     'host'        => '192.168.0.111',

@@ -6,20 +6,20 @@ use App\Models\Guild;
 
 class IndexController extends BaseController {
 
-	public function indexAction($test = null)
-	{
-		$guilds = Guild::find();
+    public function indexAction($test = null)
+    {
+        $guilds = Guild::find();
 
-		// return $guilds;
+        // return $guilds;
 
-		echo 'D:';
+        echo 'D:';
 
-		return ':D';
-	}
+        return ':D';
+    }
 
-	public function testAction()
-	{
-		return 'holi';
-	}
+    public function testAction()
+    {
+        return 'holi';
+    }
 }
 
