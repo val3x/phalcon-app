@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class HolaController extends BaseController {
+class HolaController extends ApiController {
     public function indexAction()
     {
         // return new Response('holiholi');

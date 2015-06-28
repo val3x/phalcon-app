@@ -91,12 +91,14 @@ class Application extends PhalconApplication {
 
                 $activeController = $source->getActiveController();
 
-                $messages = $activeController->getMessages();
+                $status = $activeController->getStatus();
                 $errors = $activeController->getErrors();
+                $messages = $activeController->getMessages();
+                $status_code = $activeController->getCode();
 
                 $data = [
-                    'status' => true,
-                    'status_code' => 200,
+                    'status' => $status,
+                    'status_code' => $status_code,
                     'errors' => $errors,
                     'messages' => $messages,
                     'data' => $returned

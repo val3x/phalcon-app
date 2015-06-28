@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Models\Item;
 use App\Exceptions\ApiException;
 
-class IndexController extends BaseController {
+class IndexController extends ApiController {
 
     public function indexAction($test = null)
     {
