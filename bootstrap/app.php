@@ -119,14 +119,14 @@ class Application extends PhalconApplication {
 
     private function autoloader()
     {
-        $loader = new Loader();
+        // $loader = new Loader();
 
-        $loader->registerNamespaces(array(
-            'App\\Controllers' => '../app/Controllers/',
-            'App\\Models' => '../app/Models/'
-        ));
+        // $loader->registerNamespaces(array(
+        //     'App\\Controllers' => '../app/Controllers/',
+        //     'App\\Models' => '../app/Models/'
+        // ));
 
-        $loader->register();
+        // $loader->register();
     }
 
     private function config()
