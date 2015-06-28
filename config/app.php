@@ -5,7 +5,6 @@ return new \Phalcon\Config([
      * When is enabled:
      *     - display errors
      *     - display json responses prettyfied
-     *
      **/
     'debug' => true,
 
@@ -22,16 +21,6 @@ return new \Phalcon\Config([
 			'hosts' => '*'
 	    ],
 
-		/**
-	     * Allow this methods for HTTP requests
-	     **/
-	    'methods' => [
-	    	'GET',
-	    	'POST',
-	    	'PUT',
-	    	'DELETE'
-	    ],
-
 	    /**
 	     * API's headers
 	     *
@@ -45,6 +34,24 @@ return new \Phalcon\Config([
 	     **/
 	    'headers' => [
 	    	'Content-Type' => 'application/json',
-	    ]
+	    	'Access-Control-Allow-Methods' => 'GET, POST, PUT, DELETE'
+	    ],
+    ],
+
+    /**
+     * JSON response configurations
+     **/
+    'json' => [
+	    /**
+	     * JSON encode options.
+	     * 
+	     * JSON_PRETTY_PRINT option is pre-seted if debig is enabled.
+	     * 
+	     * More information: http://php.net/manual/en/json.constants.php
+	     **/
+    	'options' => [
+	    	JSON_NUMERIC_CHECK
+    	],
+    	'depth' => 512
     ]
 ]);

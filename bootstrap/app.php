@@ -24,7 +24,7 @@ class Application extends PhalconApplication {
     }
 
 
-    public function dispatch()
+    public function run()
     {
         echo $this->handle()->getContent();
     }
@@ -55,17 +55,37 @@ class Application extends PhalconApplication {
                     $returned = $returned->toArray();
                 }
 
+                $configs = $di->get('config');
+
                 $response = new Response();
-                // $response->setContent($returned);
-                $response->setHeader('Content-Type', 'application/json');
+
+                if ($configs->api->cors->enabled) {
+                    $response->setHeader('Access-Control-Allow-Origin', $configs->api->cors->hosts);
+                }
+
+                foreach ($configs->api->headers as $name => $value) {
+                    $response->setHeader($name, $value);
+                }
 
                 $json_options = 0;
 
-                if ($di->get('config')->debug) {
-                    $json_options = 128;
+                if ($configs->debug) {
+                    $json_options = JSON_PRETTY_PRINT;
                 }
 
-                $response->setJsonContent($returned, $json_options);
+                foreach ($configs->json->options as $option) {
+                    $json_options |= $option;
+                }
+
+                $data = [
+                    'status' => true,
+                    'status_code' => 200,
+                    'errors' => [],
+                    'messages' => [],
+                    'data' => $returned
+                ];
+
+                $response->setJsonContent($data, $json_options);
 
                 $event->getSource()->setReturnedValue($response);
             });

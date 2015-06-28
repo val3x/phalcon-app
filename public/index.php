@@ -18,7 +18,7 @@ require_once __DIR__.'/../bootstrap/app.php';
 
 try {
     $app = new App\Application();
-    $app->dispatch();
+    $app->run();
 } catch(Exception $e) {
     if ($app->getDi()->get('config')->debug === true) {
         echo '<pre>';
