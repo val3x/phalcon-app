@@ -11,7 +11,10 @@ class IndexController extends BaseController {
     {
         $items = Item::find();
 
-        throw new ApiException('fuck!');
+        // throw new ApiException('fuck!');
+
+        $this->setMessage(':D');
+        $this->setError('D:');
 
         return $items;
     }

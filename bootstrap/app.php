@@ -33,6 +33,12 @@ class Application extends PhalconApplication {
     {
         $di = new Di();
 
+
+        // Store the api messages
+        $di->set('messages', function($input = null) {
+            return $input;
+        });
+
         $di->set('view', function () {
             $view = new View();
             // $view->setViewsDir('../apps/views/');
@@ -44,8 +50,14 @@ class Application extends PhalconApplication {
             $eventsManager = new Manager();
 
             $eventsManager->attach('dispatch:afterExecuteRoute', function($event, $dispatcher) use ($di) {
-                $returned = $event->getSource()->getReturnedValue();
+                // dd($event->getSource()->getActiveController()->getMessages());
+                // dd(get_class_methods($event->getSource()->getActiveController()));
+                // dd(get_class_methods($event->getSource()));
+                // dd($event->getData());
+                // dd($event->getSource());
 
+                $source = $event->getSource();
+                $returned = $source->getReturnedValue();
 
                 if (is_object($returned)) {
                     if ( ! method_exists($returned, 'toArray')) {
@@ -77,11 +89,16 @@ class Application extends PhalconApplication {
                     $json_options |= $option;
                 }
 
+                $activeController = $source->getActiveController();
+
+                $messages = $activeController->getMessages();
+                $errors = $activeController->getErrors();
+
                 $data = [
                     'status' => true,
                     'status_code' => 200,
-                    'errors' => [],
-                    'messages' => [],
+                    'errors' => $errors,
+                    'messages' => $messages,
                     'data' => $returned
                 ];
 
@@ -96,14 +113,6 @@ class Application extends PhalconApplication {
 
             return $dispatcher;
         });
-
-        // $di->set('response', function(){
-        //     var_dump('in response');
-
-        //     $response = new Response();
-
-        //     return $response;
-        // });
 
         ///////!!!!!!!!!!!!!!!!
         $di->set('modelsMetadata', function(){
