@@ -9,7 +9,6 @@
             "email": "elvis.munoz.f@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.6",
         "ext-phalcon": "~2.0"
